@@ -19,8 +19,6 @@ public class Expense {
         this.date = date;
     }
 
-    // getters and setters...
-
     public int getId() {
         return id;
     }
