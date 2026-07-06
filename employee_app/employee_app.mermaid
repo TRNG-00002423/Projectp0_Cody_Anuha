@@ -1,0 +1,146 @@
+classDiagram
+    class LoginService {
+        <<Service>>
+        attempt_login() User?
+    }
+    
+    class Expense {
+        id : int
+        user_id : int
+        amount : float
+        description : str
+        date : DateTime
+    }
+
+    class Approval {
+        id : int
+        expense_id : int
+        status : Status
+        reviewer : int?
+        comment : str?
+        review_date : DateTime?
+    }
+
+    class User {
+        id : int
+        username : str
+        role : Role
+    }
+
+    class Role {
+        <<enumeration>>
+        EMPLOYEE
+        MANAGER
+    }
+
+    class Status {
+        <<enumeration>>
+        PENDING
+        APPROVED
+        DENIED
+    }
+
+    class Menu {
+        + open()*
+        - _exit()*
+    }
+
+    class LoginMenu {
+        + open()
+        - _attempt_login()
+        - _exit()
+    }
+
+    class MainMenu {
+        + open()
+        - _submit_expense()
+        - _view_expense_history()
+        - _open_pending_submission_menu()
+        - _exit()
+    }
+
+    class PendingSubmissionMenu {
+        + open()
+        - _view_pending_submissions()
+        - _edit_submission()
+        - _delete_submission()
+        - _exit()
+    }
+
+    class Main { }
+
+    class MenuHelper {
+        + display_header_1(text)$
+        + display_header_2(text)$
+        + display_numbered_list(list)$
+    }
+
+    class Database {
+        init_db()
+        get_connection() : Connection
+    }
+
+    class UserRepository {
+        get_user_from_id(id : int)
+        get_user_from_login_info(username : str, password : str)
+        add_or_update_user(user : User)
+    }
+
+    class ExpenseRepository {
+        get_expense_from_id(id : int)
+        get_expenses_from_user_id(user_id : int)
+        add_or_update_expense(expense : Expense)
+        delete_expense(expense : Expense)
+    }
+
+    class ApprovalRepository {
+        get_approval_from_id(id : int)
+        get_approval_from_expense_id(expense_id : id)
+        get_all_approvals_from_user_id(user_id : int)
+        add_or_update_approval(approval : Approval)
+    }
+
+    class ApprovalService {
+        get_all_approvals_from_user_id(user_id : int)
+    }
+
+    class ExpenseService {
+        get_expenses_from_user_id(user_id : int)
+        add_or_update_expense(expense : Expense)
+        delete_pending_expense(expense : Expense)
+    }
+
+
+
+    Approval o-- Status
+    User o-- Role
+
+    Menu <|-- LoginMenu
+    Menu <|-- MainMenu
+    Menu <|-- PendingSubmissionMenu
+
+    Main o-- LoginMenu
+    LoginMenu o-- MainMenu
+    MainMenu o-- PendingSubmissionMenu
+
+    LoginMenu o-- MenuHelper
+    MainMenu o-- MenuHelper
+    PendingSubmissionMenu o-- MenuHelper
+
+    LoginMenu o-- LoginService
+    MainMenu o-- ExpenseService
+    PendingSubmissionMenu o-- ExpenseService
+    PendingSubmissionMenu o-- ApprovalService
+
+    ExpenseService o-- ExpenseRepository
+    ExpenseService o-- ApprovalRepository
+    ApprovalService o-- ApprovalRepository
+
+    UserRepository *-- User
+    LoginService o-- UserRepository
+    UserRepository o-- Database
+    ExpenseRepository o-- Database
+    ApprovalRepository o-- Database
+    
+    ExpenseRepository *-- Expense
+    ApprovalRepository *-- Approval
