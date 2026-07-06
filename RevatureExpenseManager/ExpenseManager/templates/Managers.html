@@ -1,0 +1,16 @@
+<h1>Managers</h1>
+
+<table border="1">
+    <tr>
+        <th>Employee Id</th>
+        <th>Email</th>
+        <th>Role</th>
+    </tr>
+    {% for x in Users %}
+    <tr>
+        <td> {{ x.id }} </td>
+        <td> {{ x.email }} </td>
+        <td> {{ x.get_role }} </td>
+    </tr>
+    {% endfor %}
+</table>

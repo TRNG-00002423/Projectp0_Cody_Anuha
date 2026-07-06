@@ -1,0 +1,35 @@
+<h1>Employees</h1>
+
+
+<table border="1">
+    <tr>
+        <th>Employee Id</th>
+        <th>Email</th>
+        <th>Role</th>
+    </tr>
+    {% for x in Users %}
+    <tr>
+        <td><a href="viewExpenses/{{ x.id }}"> {{ x.id }} </a></td>
+        <td> {{ x.email }} </td>
+        <td> {{ x.get_role_display }} </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<p>
+    <a href="viewAllExpenses/"><button type="submit" class="btn btn-primary">View All Expenses</button></a>
+</p>
+
+<p>
+    <a href="viewAllApprovals/"><button type="submit" class="btn btn-primary">View All Approvals</button></a>
+</p>
+
+<!-- <p>
+    <a href="viewAllExpenses/">View All Expenses</a>
+</p>
+
+
+<p>
+    <a href="viewAllApprovals/">View All Approvals</a>
+</p> -->

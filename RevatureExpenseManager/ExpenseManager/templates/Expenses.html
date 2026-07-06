@@ -1,0 +1,29 @@
+<h1>Expenses</h1>
+
+<table border="1">
+    <tr>
+        <th>Email</th>
+        <th>Category Id</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Date Of Expenditure</th>
+    </tr>
+    {% for x in Expense %}
+    <tr>
+        <td> {{ x.user_id.email }} </td>
+        <td> {{ x.category }} </td>
+        <td> {{ x.description }} </td>
+        <td> $ {{ x.amount }} </td>
+        <td> {{ x.dateofExpense }} </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- <p>
+    <a href="addExpense/">Add Expense</a>
+</p> -->
+
+
+<p>
+    <a href="addExpense/"><button type="submit" class="btn btn-primary">Add Expense</button></a>
+</p>

@@ -1,0 +1,22 @@
+<h1>Add Expense</h1>
+
+<form action="add/" method="post">
+    {%csrf_token %}
+    Email : <br>
+    <input type="email" name="email">
+    <br><br>
+    Category : <br>
+    <input name="category">
+    <br><br>
+    Description : <br>
+    <input name="description">
+    <br><br>
+    Amount : <br>
+    <input name="amount">
+    <br><br>
+    Date Of Expense : <br>
+    <input type="date" name="dateofExpense" format="%Y-%m-%d">
+    <br><br>
+    <!-- <input type="submit" value="Submit Expense"> -->
+    <button type="submit" class="btn btn-primary">Submit Expense</button>
+</form>

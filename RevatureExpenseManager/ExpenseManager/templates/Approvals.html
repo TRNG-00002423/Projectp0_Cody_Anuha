@@ -1,0 +1,28 @@
+<h1>Approvals</h1>
+
+<table border="1">
+    <tr>
+        <th>Approval Id</th>
+        <th>Expense Id</th>
+        <th>Status</th>
+        <th>Reviewer</th>
+        <th>Date Approved</th>
+        <th>Comment</th>
+    </tr>
+    {% for x in Approval %}
+    <tr>
+        <td> {{ x.id }} </td>
+        <td> {{ x.expense_id }} </td>
+        <!-- <td> {{ x.expense_id.description }} </td>
+        <td> {{ x.expense_id.amount }} </td> -->
+        <td> {{ x.get_status_display }} </td>
+        {% if x.review.email %}
+            <td> {{ x.reviewer.email }} </td>
+        {% else %}
+            <td>No Data Available</td>
+        {% endif %}
+        <td> {{ x.dateReviewed }} </td>
+        <td> {{ x.comment }} </td>
+    </tr>
+    {% endfor %}
+</table>
