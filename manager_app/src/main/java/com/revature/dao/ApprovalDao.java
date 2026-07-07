@@ -8,6 +8,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import com.revature.util.DateUtil;
+
 public class ApprovalDao implements IApprovalDao {
 
     @Override
@@ -59,9 +61,13 @@ public class ApprovalDao implements IApprovalDao {
     }
 
     private Approval mapRow(ResultSet rs) throws SQLException {
-        Integer reviewerId = rs.getObject("reviewer_id", Integer.class); // handles NULL correctly
+        int reviewerIdRaw = rs.getInt("reviewer_id");
+        Integer reviewerId = rs.wasNull() ? null : reviewerIdRaw;
+
         String reviewDateStr = rs.getString("review_date");
-        LocalDate reviewDate = (reviewDateStr != null) ? LocalDate.parse(reviewDateStr) : null;
+        LocalDate reviewDate = (reviewDateStr != null)
+                ? DateUtil.parseFlexibleDate(reviewDateStr)
+                : null;
 
         return new Approval(
                 rs.getInt("id"),

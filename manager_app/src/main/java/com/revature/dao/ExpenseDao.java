@@ -2,9 +2,11 @@ package com.revature.dao;
 
 import com.revature.db.DatabaseConnection;
 import com.revature.model.PendingExpenseView;
+import com.revature.util.DateUtil;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class ExpenseDao implements IExpenseDao {
                 rs.getString("employee_username"),
                 rs.getDouble("amount"),
                 rs.getString("description"),
-                LocalDate.parse(rs.getString("date"))
+                DateUtil.parseFlexibleDate(rs.getString("date"))
         );
     }
 }

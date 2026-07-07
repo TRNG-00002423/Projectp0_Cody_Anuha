@@ -1,7 +1,7 @@
 package com.revature.controller;
 
-import com.revature.dao.ApprovalDao;
-import com.revature.dao.ExpenseDao;
+import com.revature.dao.IApprovalDao;
+import com.revature.dao.IExpenseDao;
 import com.revature.model.Approval;
 import com.revature.model.ApprovalStatus;
 import com.revature.model.PendingExpenseView;
@@ -10,10 +10,10 @@ import java.util.List;
 
 public class ExpenseController {
 
-    private final ExpenseDao expenseDao;
-    private final ApprovalDao approvalDao;
+    private final IExpenseDao expenseDao;
+    private final IApprovalDao approvalDao;
 
-    public ExpenseController(ExpenseDao expenseDao, ApprovalDao approvalDao) {
+    public ExpenseController(IExpenseDao expenseDao, IApprovalDao approvalDao) {
         this.expenseDao = expenseDao;
         this.approvalDao = approvalDao;
     }

@@ -3,9 +3,11 @@ package com.revature.dao;
 import com.revature.db.DatabaseConnection;
 import com.revature.model.ApprovalStatus;
 import com.revature.model.ExpenseReportView;
+import com.revature.util.DateUtil;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +63,24 @@ public class ReportDao implements IReportDao {
         }
     }
 
+    @Override
+    public List<ExpenseReportView> findByStatus(ApprovalStatus status) {
+        String sql = BASE_SELECT + " WHERE a.status = ? ORDER BY e.date DESC";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, status.name());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return mapResults(rs);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to fetch report for status: " + status, e);
+        }
+    }
+
     private List<ExpenseReportView> mapResults(ResultSet rs) throws SQLException {
         List<ExpenseReportView> results = new ArrayList<>();
         while (rs.next()) {
@@ -75,7 +95,7 @@ public class ReportDao implements IReportDao {
                 rs.getString("employee_username"),
                 rs.getDouble("amount"),
                 rs.getString("description"),
-                LocalDate.parse(rs.getString("date")),
+                DateUtil.parseFlexibleDate(rs.getString("date")),
                 ApprovalStatus.valueOf(rs.getString("status")),
                 rs.getString("comment")
         );

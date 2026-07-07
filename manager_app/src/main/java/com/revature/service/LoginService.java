@@ -1,16 +1,16 @@
 package com.revature.service;
 
-import com.revature.dao.UserDao;
+import com.revature.dao.IUserDao;
 import com.revature.model.User;
-import org.mindrot.jbcrypt.BCrypt;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import java.util.Optional;
 
 public class LoginService {
 
-    private final UserDao userDao;
+    private final IUserDao userDao;
 
-    public LoginService(UserDao userDao) {
+    public LoginService(IUserDao userDao) {
         this.userDao = userDao;
     }
 
@@ -23,9 +23,12 @@ public class LoginService {
 
         User user = userOpt.get();
 
-        boolean matches = BCrypt.checkpw(plaintextPassword, user.getPassword());
+        BCrypt.Result result = BCrypt.verifyer().verify(
+                plaintextPassword.toCharArray(),
+                user.getPassword().toCharArray()
+        );
 
-        if (!matches) {
+        if (!result.verified) {
             return Optional.empty();
         }
 
