@@ -13,14 +13,8 @@
     <tr>
         <td> {{ x.id }} </td>
         <td> {{ x.expense_id }} </td>
-        <!-- <td> {{ x.expense_id.description }} </td>
-        <td> {{ x.expense_id.amount }} </td> -->
         <td> {{ x.get_status_display }} </td>
-        {% if x.review.email %}
-            <td> {{ x.reviewer.email }} </td>
-        {% else %}
-            <td>No Data Available</td>
-        {% endif %}
+        <td> {{ x.reviewer.email }} </td>
         <td> {{ x.dateReviewed }} </td>
         <td> {{ x.comment }} </td>
     </tr>

@@ -1,12 +1,15 @@
 <h1>Register</h1>
 
-<form action="add/" method="post">
+<form action="addUser/" method="post">
     {% csrf_token %}
     Email : <br>
     <input name="email">
     <br><br>
     Password : <br>
     <input name="password">
+    <br><br>
+    Role : <br>
+    <input name="role">
     <br><br>
     <input type="submit" value="Sing Up">
 </form>

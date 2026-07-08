@@ -13,7 +13,7 @@
         <td> {{ x.user_id.email }} </td>
         <td> {{ x.category }} </td>
         <td> {{ x.description }} </td>
-        <td> $ {{ x.amount }} </td>
+        <td> $ {{ x.amount|floatformat:2 }} </td>
         <td> {{ x.dateofExpense }} </td>
     </tr>
     {% endfor %}
